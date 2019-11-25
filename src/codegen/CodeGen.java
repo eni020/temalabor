@@ -77,6 +77,11 @@ public class CodeGen {
                                 m.setVariables(line[0], value);
                             }
                         }
+                        if(line[i].contains("der") && !line[i].contains("Variable") ) {
+                            String var = line[0].substring(line[0].indexOf('(') + 1, line[0].indexOf(','));
+                            String value = line[1].substring(0, line[1].indexOf(')'));
+                            m.setEquations(var, value);
+                        }
                     }
                 }
             }

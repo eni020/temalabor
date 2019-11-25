@@ -32,13 +32,17 @@ public class Model {
         this.initials = this.initials + "\n\t" + name + " = " + value + ";";
     }
 
+    public void setEquations(String var, String value) {
+        this.equations = this.equations + "\n\tder(" + var + ") = " + value + ";";
+    }
+
     public String getName() {
         return name;
     }
 
     @Override
     public String toString() {
-        String out = "model " + name + "\t" + parameters + variables + initials + "\nend " + name + ";";
+        String out = "model " + name + "\t" + parameters + variables + initials + equations + "\nend " + name + ";";
 
 
 
