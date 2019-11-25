@@ -37,10 +37,14 @@ public class Car {
     }
 
 
-    public void der(Variable v1, Variable v2) {
+    public void equation() {
+        der(distance, speed);
+        der(speed, acceleration);
+        if(speed.getValue() <= 0.0) {
+            acceleration.setValue(0.0);
+        }
     }
 
-    public void equation() {
-
+    public void der(Variable v1, Variable v2) {
     }
 }
