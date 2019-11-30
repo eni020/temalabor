@@ -11,8 +11,6 @@ public class CodeGen {
 
     private static ModelGen m = new ModelGen("");
     private static List<Sourcecode> sourcecodes = new ArrayList<>();
-    private static String mainclass = "Car";
-    private static String actclass;
     static int i = 0;
 
     public static String[] declaration(String object) {
@@ -29,64 +27,55 @@ public class CodeGen {
         return null;
     }
 
-    public static void newParameter(String[] line) {
-//        String[] element = declaration(object);
-        String unit = "";
-//        if (element != null) {
-//            boolean newclass = false;
-//            for (Sourcecode source: sourcecodes) {
-//                if(source.getClassname().equals(element[0])) {
-//                    newclass = true;
-//                }
-//            }
-//            if(!newclass) {
-//                input(element[0]);
-//            }
-//            actclass = element[0];
-//            unit = line();
-//        }
-
-        System.out.println(++i);
-// m.setParameters(object + "(" + unit + ")" + " = " + "0.0);" + "\n");
-    }
-
-    public static String line() {
+    public static void line() {
         for (Sourcecode source: sourcecodes){
-            if (source.getClassname() == actclass) {
-                List<String[]> src = source.getSource();
-                for (String[] line: src) {
-                    for (int i = 0; i < line.length; i++) {
-                        if(line[i].contains("class") && line[i + 1].contains(mainclass) && m.getName() == "") {
-                            m = new ModelGen(mainclass);
+            List<String[]> src = source.getSource();
+            for (String[] line: src) {
+                for (int i = 0; i < line.length; i++) {
+                    if(line[i].contains("class") && m.getName() == "") {
+                        m = new ModelGen(line[i + 1]);
+                    }
+                    if(line[i].contains("new") && !line[2].contains("Variable")) {
+                       if (line[3].contains("Parameter")) {
+                            String unit = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf(','));
+                            String value = line[4].substring(0, line[4].indexOf(')'));
+                            m.setParameters(line[0], unit, value);
                         }
-                        if(line[i].contains("new")) {
-//                            String list = line[i].substring(0, line[i].indexOf('.')-1);
-//                            String object = line[i].substring(line[i].indexOf('(') + 1, line[i].indexOf(')'));
-                            if (line[3].contains("Parameter")) {
-                                String unit = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf(','));
-                                String value = line[4].substring(0, line[4].indexOf(')'));
-                                m.setParameters(line[0], unit, value);
+                        if (line[3].contains("Variable")) {
+                            String value = "";
+                            if (line[3].contains("getValue")) {
+                                value = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf('.'));
+                            } else {
+                                value = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf(')'));
                             }
-                            if (line[3].contains("Variable")) {
-                                String value = "";
-                                if (line[3].contains("getValue")) {
-                                    value = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf('.'));
-                                } else {
-                                    value = line[3].substring(line[3].indexOf('(') + 1, line[3].indexOf(')'));
-                                }
-                                m.setVariables(line[0], value);
-                            }
+                            m.setVariables(line[0], value);
                         }
-                        if(line[i].contains("der") && !line[i].contains("Variable") ) {
-                            String var = line[0].substring(line[0].indexOf('(') + 1, line[0].indexOf(','));
-                            String value = line[1].substring(0, line[1].indexOf(')'));
-                            m.setEquations(var, value);
+                    }
+                    if(line[i].contains("der")) {
+                        String value = "";
+                        String var = line[0].substring(line[0].indexOf('(') + 1, line[0].indexOf(','));
+                        if(line[1].contains("new")) {
+                            value = line[2].substring(line[2].indexOf('(') + 1, line[2].indexOf(')'));
                         }
+                        else {
+                            value = line[1].substring(0, line[1].indexOf(')'));
+                        }
+                        m.setEquations( "der(" + var + ") = " + value + ";");
+                    }
+                    if(line[i].contains("if")) {
+                        String when = "";
+                        String reinit = "";
+                        if (line[0].contains("getValue")) {
+                            when = "when (" + line[0].substring(line[0].indexOf('(') + 1, line[0].indexOf('.')) + " " + line[1] + " " + line[2] +  " then ";
+                        }
+                        if (line[4].contains("setValue")) {
+                            reinit = "reinit(" + line[4].substring(0, line[4].indexOf('.')) + ", " + line[4].substring(line[4].indexOf('(') + 1, line[4].length()) +  " end when;";
+                        }
+                            m.setEquations(when + reinit);
                     }
                 }
             }
         }
-        return null;
     }
 
     public static void input(String classname) {
@@ -121,8 +110,7 @@ public class CodeGen {
     }
 
     public static void main(String[] args) {
-        input(mainclass);
-        actclass = mainclass;
+        input("Car");
         line();
 
         System.out.println(m.toString());

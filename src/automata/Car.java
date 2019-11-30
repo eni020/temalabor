@@ -16,33 +16,19 @@ public class Car extends Model{
 
 
     Car(){
-        breakingDeceleration = new Parameter("m/s2", 10.0);
+        breakingDeceleration = new Parameter("m/s2", -10.0);
         maxSpeed = new Parameter("m/s", 13.8);
         distance = new Variable(0.0);
         speed = new Variable(maxSpeed.getValue());
-        acceleration = new Variable(0.0);
-
-//        parameters = new ArrayList<>();
-//        variables = new ArrayList<>();
-//        Acceleration breakingDeceleration = new Acceleration("breakingDeceleration", 10.0);
-//        Velocity maxSpeed = new Velocity("maxSpeed", 13.8);
-//        Displacement distance = new Displacement("distance",0.0);
-//        Velocity speed = new Velocity("speed", maxSpeed.getValue());
-//        Acceleration acceleration = new Acceleration("acceleration",0.0);
-//        parameters.add(breakingDeceleration);
-//        parameters.add(maxSpeed);
-//        variables.add(distance);
-//        variables.add(speed);
-//        variables.add(acceleration);
+        acceleration = new Variable(breakingDeceleration.getValue());
     }
 
 
     public void equation() {
+        der(acceleration, new Variable(0.0));
         der(distance, speed);
         der(speed, acceleration);
-        if(speed.getValue() <= 0.0) {
-            acceleration.setValue(0.0);
-        }
+        if(speed.getValue() <= 0.0) { acceleration.setValue(0.0); }
     }
 
 
