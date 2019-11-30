@@ -1,6 +1,8 @@
 package codegen;
 
 
+import automata.Car;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -112,6 +114,7 @@ public class CodeGen {
     public static void main(String[] args) {
         input("Car");
         line();
+        Car car = new Car();
 
         System.out.println(m.toString());
     }
