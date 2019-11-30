@@ -3,7 +3,7 @@ package automata;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Car {
+public class Car extends Model{
 
 //    private List<Type> parameters;
 //    private List<Type> variables;
@@ -45,6 +45,5 @@ public class Car {
         }
     }
 
-    public void der(Variable v1, Variable v2) {
-    }
+
 }
