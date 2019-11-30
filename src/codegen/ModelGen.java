@@ -32,8 +32,8 @@ public class ModelGen {
         this.initials = this.initials + "\n\t" + name + " = " + value + ";";
     }
 
-    public void setEquations(String var, String value) {
-        this.equations = this.equations + "\n\tder(" + var + ") = " + value + ";";
+    public void setEquations(String equation) {
+        this.equations = this.equations + "\n\t" +equation;
     }
 
     public String getName() {
