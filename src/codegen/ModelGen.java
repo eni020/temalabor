@@ -1,13 +1,13 @@
 package codegen;
 
-public class Model {
+public class ModelGen {
     private String name;
     private String parameters = "";
     private String variables = "";
     private String initials = "\ninitial equation";
     private String equations = "\nequation";
 
-    public Model(String name) {
+    public ModelGen(String name) {
         this.name = name;
     }
 

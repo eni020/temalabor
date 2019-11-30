@@ -9,7 +9,7 @@ import java.util.Vector;
 
 public class CodeGen {
 
-    private static Model m = new Model("");
+    private static ModelGen m = new ModelGen("");
     private static List<Sourcecode> sourcecodes = new ArrayList<>();
     private static String mainclass = "Car";
     private static String actclass;
@@ -57,7 +57,7 @@ public class CodeGen {
                 for (String[] line: src) {
                     for (int i = 0; i < line.length; i++) {
                         if(line[i].contains("class") && line[i + 1].contains(mainclass) && m.getName() == "") {
-                            m = new Model(mainclass);
+                            m = new ModelGen(mainclass);
                         }
                         if(line[i].contains("new")) {
 //                            String list = line[i].substring(0, line[i].indexOf('.')-1);
