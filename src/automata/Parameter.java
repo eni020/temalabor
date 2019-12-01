@@ -17,5 +17,4 @@ public class Parameter {
     public String getUnit() {
         return unit;
     }
-
 }

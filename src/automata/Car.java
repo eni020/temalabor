@@ -1,6 +1,6 @@
 package automata;
 
-public class Car extends Model{
+public class Car extends Model {
 
     Parameter breakingDeceleration;
     Parameter maxSpeed;
@@ -23,6 +23,17 @@ public class Car extends Model{
         if(speed.getValue() <= 0.0) { acceleration.setValue(0.0); }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

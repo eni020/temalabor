@@ -1,8 +1,5 @@
 package codegen;
 
-
-import automata.Car;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,20 +11,6 @@ public class CodeGen {
     private static ModelGen m = new ModelGen("");
     private static List<Sourcecode> sourcecodes = new ArrayList<>();
     static int i = 0;
-
-    public static String[] declaration(String object) {
-        for (Sourcecode source: sourcecodes) {
-            List<String[]> src = source.getSource();
-            for (String[] line : src) {
-                for (String word : line) {
-                    if (word.contains(object)) {
-                        return line;
-                    }
-                }
-            }
-        }
-        return null;
-    }
 
     public static void line() {
         for (Sourcecode source: sourcecodes){
@@ -114,8 +97,6 @@ public class CodeGen {
     public static void main(String[] args) {
         input("Car");
         line();
-        Car car = new Car();
-
         System.out.println(m.toString());
     }
 }
