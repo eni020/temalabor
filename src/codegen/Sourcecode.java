@@ -1,12 +1,11 @@
 package codegen;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Sourcecode {
 
     private String classname;
-    private static List<String[]> source;
+    private static ArrayList<String[]> source;
 
     public String getClassname() {
         return classname;
@@ -16,11 +15,11 @@ public class Sourcecode {
         this.classname = classname;
     }
 
-    public static List<String[]> getSource() {
+    public static ArrayList<String[]> getSource() {
         return source;
     }
 
-    public static void setSource(List<String[]> source) {
+    public static void setSource(ArrayList<String[]> source) {
         Sourcecode.source = source;
     }
 
